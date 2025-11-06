@@ -1,168 +1,94 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+<p align="center"><a href="LOLIN (WEMOS) D1 mini" target="_blank"><img src="https://raw.githubusercontent.com/whiterabbitgede/esp8266/refs/heads/main/d1_mini_v4.webp" width="400"></a></p>
 
 
-#include <Arduino.h>
 
-// Pin LED
-const int GREEN_PIN = D2;
-const int YELLOW_PIN = D3;
-const int RED_PIN = D4;
-const int BUZZER_PIN = D1;
+- node mcu LOLIN (WEMOS) D1 mini (clone) (esp8266:esp8266:d1_mini_clone)
+/dev/ttyUSB0
+USB\VID_1A86&PID_7523
+USB\VID_1A86&PID_7523&REV_0264
 
-void setup() {
-  // pinMode(13, OUTPUT);
-  pinMode(RED_PIN, OUTPUT);
-  pinMode(YELLOW_PIN, OUTPUT);
-  pinMode(GREEN_PIN, OUTPUT);
-  pinMode(BUZZER_PIN, OUTPUT);
-}
+https://dl.driverpack.io/driverpacks/repack/Misc/WinChipHead/10x64/3.9.2024.09/WinChipHead-10x64-3.9.2024.09-drp.zip
 
-void bunyiBuzzerDinamis(float multiplier = 1) {
-  int baseNada[] = {
-    440, 523,    // 61'
-    490, 330, 440, 490, 523,  // 73 671'
-    440,          // 6    
-    0,
-    523,           // 1'
-    440, 490, 330, // 673
-    330, 490, 523, // 371'
-    440            // 6
-  };
+https://www.wch.cn/downloads/CH341SER.EXE.html?type=en
 
-  int durations[] = {
-    600, 600,    // 61'
-    500, 700, 500, 500, 600,  // 73 671' 
-    800,          // 6    
-    1000,
-    600,           // 1'
-    500, 500, 600, // 673  
-    500, 500, 600, // 371'
-    800            // 6
-  };
+CH341SER.INF
+WCH.CN
+  |__ USB-SERIAL CH340
+      |__ 09/16/2024, 3.9.2024.09
 
-  int numNada = sizeof(baseNada) / sizeof(baseNada[0]);
-  for (int i = 0; i < numNada; i++) {
-    if (baseNada[i] == 0) {
-      noTone(BUZZER_PIN);
-      delay(durations[i]);
-    } else {
-      int freqTinggi = baseNada[i] * multiplier; // Naikkan frekuensi
-      tone(BUZZER_PIN, freqTinggi, durations[i]);
-      delay(durations[i] + 100);
-    }
-  }
-  noTone(BUZZER_PIN);
-  delay(1000);
-}
 
-// --- Fungsi Buzzer Pasif ---
-void bunyiTingTong(int repeatCount) {
-  // int nada[] = {1319, 1046, 880, 1046}; // E6, C6, A5, C6 (frekuensi Hz)
-  // int durasi = 200; // durasi tiap nada (ms)
 
-  // int nada[] = {1046, 784, 880}; // C6, G5, A5 (frekuensi Hz)
-  // int durasi = 200; // durasi tiap nada (ms)
 
-  int nada[] = {830, 830, 880, 587, 0, 0, 0, 783, 830}; //A, D, G (frekuensi Hz)
-  int durasi = 200; // durasi tiap nada (ms)
+sudo apt remove brltty
 
-  // int nada[] = {1479, 830, 1479, 1479, 1479, 830, 1479, 830, 830}; //90, 80,90 (frekuensi Hz)
-  // int durasi = 200; // durasi tiap nada (ms)
+git clone https://github.com/juliagoda/CH341SER.git
 
-  // int nada[] = {659, 587, 523, 494, 440, 392, 349, 330}; // E6, C6, A5, C6 (frekuensi Hz)
-  // int durasi = 268; // durasi tiap nada (ms)
+cd CH341SER
+make
+make load
+sudo usermod -aG dialout $USER	
+ls /dev/ttyUSB*
+lsmod | grep ch341
+sudo dmesg | grep ch34x
 
-  int numNada = sizeof(nada) / sizeof(nada[0]);
 
-  for (int r = 0; r < repeatCount; r++) {
-    // for (int i = 0; i < 4; i++) {
-    for (int i = 0; i < numNada; i++) {
-      tone(BUZZER_PIN, nada[i]);
-      delay(durasi);
-      noTone(BUZZER_PIN);
-      delay(80); // jeda antar nada
-    }
-    delay(400); // jeda antar pola "ting-tong-tin-tong"
-  }
-}
 
-void rygOff(){
-  digitalWrite(RED_PIN, LOW);
-  digitalWrite(YELLOW_PIN, LOW);
-  digitalWrite(GREEN_PIN, LOW);
-}
 
-void redOn(){
-  digitalWrite(RED_PIN, HIGH);
-  digitalWrite(YELLOW_PIN, LOW);
-  digitalWrite(GREEN_PIN, LOW);
-}
+BN: Unknown board
+VID: 1A86
+PID: 7523
+SN: Upload any sketch to obtain it
 
-void yellowOn(){
-  digitalWrite(RED_PIN, LOW);
-  digitalWrite(YELLOW_PIN, HIGH);
-  digitalWrite(GREEN_PIN, LOW);
-}
 
-void greenOn(){
-  digitalWrite(RED_PIN, LOW);
-  digitalWrite(YELLOW_PIN, LOW);
-  digitalWrite(GREEN_PIN, HIGH);
-}
+yt-dlp -x --audio-format wav "https://www.youtube.com/watch?v=6qJ5obdbIEw" -o audio.wav
 
-void loop() {
-  // put your main code here, to run repeatedly:
-  // digitalWrite(13, HIGH);
-  // delay(1000); 
-  // digitalWrite(13, LOW);
-  // delay(1000);
-  // Lampu Merah ON
-  // bunyiTingTong(3);
-  // bunyiTingTong(2);
-  redOn();
-  delay(5000); // 5 detik
 
-  // Lampu Kuning ON
-  yellowOn();
-  delay(2000); // 2 detik
+A D G
+A2
+A3
+A4
 
-  // Lampu Hijau ON
-  greenOn();
-  delay(5000); // 5 detik
 
-  rygOff();
-  delay(500);
+61`/73 671`/6
+1`/673 371`/6
+ 
 
-  // Lampu Kuning ON
-  yellowOn();
-  delay(500); // 0.5 detik
 
-  rygOff();
-  delay(500);
+Do  (C4) = 	261.63	 Hz
+Re  (D4) = 	293.66	 Hz
+Mi  (E4) = 	329.63	 Hz
+Fa  (F4) = 	349.23	 Hz
+Sol (G4) = 	392.00	 Hz
+La  (A4) = 	440.00	 Hz
+Si  (B4) = 	493.88	 Hz
+Do  (C5) = 	523.25	 Hz
 
-  // Lampu Kuning ON
-  yellowOn();
-  delay(500); // 0.5 detik
 
-  rygOff();
-  delay(500);
-  
-  // Lampu Kuning ON
-  yellowOn();
-  delay(500); // 0.5 detik
+C#4/Db4 = 	277.18	 Hz  (antara C4 dan D4)
+D#4/Eb4 = 	311.13	 Hz  (antara D4 dan E4)
+F#4/Gb4 = 	369.99	 Hz  (antara F4 dan G4)
+G#4/Ab4 = 	415.30	 Hz  (antara G4 dan A4)
+A#4/Bb4 = 	466.16	 Hz  (antara A4 dan B4)
 
-  rygOff();
-  delay(500);
 
-    // Buzzer bunyi 3 kali dengan nada naik
-  // for (int i = 0; i < 3; i++) {
-  //   bunyiBuzzer(1000 + (i * 200), 200);
-  // }
 
-  // bunyiTingTong(2);
-  // bunyiBuzzer();
-  // bunyiBuzzerDinamis(1.0);  // Normal
-  // bunyiBuzzerDinamis(1.5);  // 50% lebih tinggi
-  bunyiBuzzerDinamis(2);  // 1 oktaf lebih tinggi
+61`/73 671`/6
+1`/673 371`/6
 
-}
+1	Do  (C4) = 	261.63	 Hz
+2	Re  (D4) = 	293.66	 Hz
+3	Mi  (E4) = 	329.63	 Hz
+4	Fa  (F4) = 	349.23	 Hz
+5	Sol (G4) = 	392	 Hz
+6	La  (A4) = 	440	 Hz
+7	Si  (B4) = 	493.88	 Hz
+8	Do  (C5) = 	523.25	 Hz
+9		555.28	 Hz
+10		591.25	 Hz
+11		610.85	 Hz
+12		653.62	 Hz
+13		701.62	 Hz
+14		755.5	 Hz
+15		784.87	 Hz
+
+
